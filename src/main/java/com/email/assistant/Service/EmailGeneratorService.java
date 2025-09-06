@@ -70,7 +70,7 @@ public class EmailGeneratorService {
         prompt.append("Generate a professional email reply for the following email content. Please do not generate a subject line ");
         if (emailRequest.getTone() != null && !emailRequest.getTone().isEmpty()) {
             prompt.append("Use a ").append(emailRequest.getTone()).append(" tone.");
-            prompt.append("\n Original email: \n").append(emailRequest.getEmailContent());
+            prompt.append("/n Original email: /n").append(emailRequest.getEmailContent());
         }
         return prompt.toString();
     }

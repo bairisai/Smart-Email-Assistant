@@ -12,6 +12,7 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
+import axios from "axios";
 
 function App() {
   const [emailContent, setEmailContent] = useState("");
@@ -19,7 +20,29 @@ function App() {
   const [generatedReply, setGeneratedReply] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const handleSubmit = async () => {};
+  const handleSubmit = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/email/generate",
+        {
+          emailContent,
+          tone,
+        }
+      );
+      setGeneratedReply(
+        typeof response.data === "string"
+          ? response.data
+          : JSON.stringify(response.data)
+      );
+    } catch (error) {
+      setError("Error Generating Reply, Please try again.");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Typography variant="h3" component="h1" gutterBottom>
